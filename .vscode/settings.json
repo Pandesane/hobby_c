@@ -1,0 +1,9 @@
+{
+  "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild",
+  "C_Cpp.default.compileCommands": "/home/pande/hobby/hobby_c/builddir/compile_commands.json",
+  "files.associations": {
+    "*.embeddedhtml": "html",
+    "*.css": "tailwindcss",
+    "pcre2.h": "c"
+  }
+}

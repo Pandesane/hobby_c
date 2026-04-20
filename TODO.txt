@@ -1,0 +1,40 @@
+!!! Read book 21st Centaury C
+Added parsing the file line by line using getLine nextLine and prevLine
+
+
+
+
+Removing empty lines and comments
+Splitting files to multiple .c files and using headers instead
+Creating a tree data structure that can map a do block to and end block and extract
+all the contents in between and make a scope for that block
+Add a keywords array to the language
+Add tokenizer to group code depending on keyword listing of the language
+Add code generator for the blocks of code i.e. each CodeBlock
+struct having input block and output block and the stream to put that code in
+Add project build file that compiles a whole project with all of its file
+Add ability to create custom functions that abstract away low level c code and
+they also map the dll and include files dir
+Add new operators and the matcher in c code
+Abstract away memory allocation and deallocation
+Create a simple garbage collector
+Create a runtime engine that enables multithreading an routines like the erlang vm
+Add ability to do pattern matching to the language
+Add standard library i.e data structures
+Enable meta programming
+Add math classes structs and operators
+Add windowing ability
+Add svg support parsing
+Add opengl and vulkan abstraction API
+Add an interpreter for the language and debugger and also VM
+Add ability to create shell scripting
+Add project manager build system
+Add a package repo for packages
+Add a documentation support to the language
+Add custom UI framework
+Add support for embedded deices
+Create a kernel for embedded devices like RTOS
+Add and embedded ui framework and editor
+Add support for AI programming
+
+

@@ -9,6 +9,7 @@ Splitting files to multiple .c files and using headers instead
 Creating a tree data structure that can map a do block to and end block and extract
 all the contents in between and make a scope for that block
 Add a keywords array to the language
+Add binary manipulation like from elixir
 Add tokenizer to group code depending on keyword listing of the language
 Add code generator for the blocks of code i.e. each CodeBlock
 struct having input block and output block and the stream to put that code in
@@ -26,6 +27,7 @@ Add math classes structs and operators
 Add windowing ability
 Add svg support parsing
 Add opengl and vulkan abstraction API
+Add a shader language abstraction
 Add an interpreter for the language and debugger and also VM
 Add ability to create shell scripting
 Add project manager build system
@@ -36,5 +38,11 @@ Add support for embedded deices
 Create a kernel for embedded devices like RTOS
 Add and embedded ui framework and editor
 Add support for AI programming
+Add multiple threading compilation
+Adding webgl and js language compilation
+Adding an svg based rendering game engine for 2d
+In game engine level design
+In prog language physics engine*
+
 
 

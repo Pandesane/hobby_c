@@ -1,28 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "./file_stream_types.h"
 
+#ifndef FILESTREAM_H
+#define FILESTREAM_H
 #define MAX_BUFFER_SIZE 300
-typedef char *LINE;
 typedef int Boolean;
-
-
-typedef struct
-{
-  char *file_path;
-  char *open_mode;
-  FILE *file;
-} H_FILE;
-
-typedef struct
-{
-  H_FILE *h_file;
-  int line_buffer_size;
-  int maxLines;
-  LINE *cached_file_lines;
-  int numberOfLines;
-  int currentLine;
-} FILESTREAM;
 
 // File stream
 /*
@@ -121,3 +105,15 @@ LINE get_previous_line(FILESTREAM *file_stream)
   }
   return (char *)&file_stream->cached_file_lines[file_stream->currentLine * MAX_BUFFER_SIZE];
 }
+
+Boolean has_next_line(FILESTREAM *fileStream)
+{
+  if (fileStream->currentLine == fileStream->numberOfLines)
+  {
+    return 0;
+  }
+
+  return 1;
+}
+
+#endif

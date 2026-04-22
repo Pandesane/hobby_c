@@ -4,7 +4,8 @@
   "files.associations": {
     "*.embeddedhtml": "html",
     "*.css": "tailwindcss",
-    "pcre2.h": "c"
+    "pcre2.h": "c",
+    "file_stream_types.h": "c",
+    "stdlib.h": "c"
   },
-  "C_Cpp.errorSquiggles": "enabled"
 }

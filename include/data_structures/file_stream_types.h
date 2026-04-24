@@ -1,7 +1,8 @@
-#include <stdio.h>
 
 #ifndef FILESTREAM_TYPES
 #define FILESTREAM_TYPES
+#include <stdio.h>
+#include "./dynamic_array.h"
 
 typedef char *LINE;
 typedef struct
@@ -14,9 +15,9 @@ typedef struct
 typedef struct
 {
   H_FILE *h_file;
-  int line_buffer_size;
-  int maxLines;
-  LINE *cached_file_lines;
+  // int line_buffer_size;
+  // int maxLines;
+  DYNAMIC_ARRAY  *cached_file_lines;
   int numberOfLines;
   int currentLine;
 } FILESTREAM;

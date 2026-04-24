@@ -1,0 +1,64 @@
+
+// #define DATA_TYPE int
+
+#ifndef H_DYNAMIC_ARRAY
+#define H_DYNAMIC_ARRAY
+#define Integer int
+#define Float float
+
+typedef void (*VoidFunction)(void *);
+typedef void *(*GET)(void *buffer, int index);
+typedef void (*SET)(void *dynamic_arr, int index, void *data);
+
+// Creating a dynamic array
+// GETTER AND SETTER DESIGN
+// void arr_setter(void *void_buffer, int index, void *data)
+// {
+//   float *buffer = (float *)void_buffer;
+//   buffer[index] = chunk;
+// }
+
+// void *arr_getter(void *void_buffer, int index)
+// {
+//   float *buffer = (float *)void_buffer;
+//   return buffer[index];
+// }
+typedef struct
+{
+  int length;
+  void *buffer;
+  int element_size;
+  int buffer_size;
+  int _current_insert_index;
+  char *arr_data_type;
+  GET arr_getter_function;
+  SET arr_setter_function;
+
+} DYNAMIC_ARRAY;
+
+// Stack like properties
+void push_DA(DYNAMIC_ARRAY *arr, void *data);
+void pop_DA(DYNAMIC_ARRAY *arr);
+
+// QUeue like properties
+void enqueue_DA(DYNAMIC_ARRAY *arr, void *data);
+void dequeue_DA(DYNAMIC_ARRAY *arr);
+
+// List properties
+DYNAMIC_ARRAY *create_array_DA(int element_size, GET arr_getter_fun, SET arr_setter_fun);
+void insert_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *data);
+void remove_at_index_DA(DYNAMIC_ARRAY *arr, int index);
+void *get_at_index_DA(DYNAMIC_ARRAY *arr, int index);
+void add_DA(DYNAMIC_ARRAY *arr, void *data);
+
+// For each function call back design
+// void run(void *data)
+// {
+//   printf("Data in array is: %f \n", *(float *)data);
+// }
+void for_each_DA(DYNAMIC_ARRAY *arr, VoidFunction fn);
+void _grow_buffer_DA(DYNAMIC_ARRAY *arr);
+void _shrink_buffer_DA(DYNAMIC_ARRAY *arr);
+int has_next_element(DYNAMIC_ARRAY *arr, int index);
+
+#endif

@@ -1,51 +1,12 @@
-
+#include "data_structures/dynamic_array.h"
 #include <stdlib.h>
-// #define DATA_TYPE int
+#include <stdio.h>
+#include <string.h>
 
-#ifndef H_DYNAMIC_ARRAY
-#define H_DYNAMIC_ARRAY
-#define Integer int
-#define Float float
-
-typedef void (*VoidFunction)(void *);
-typedef void *(*GET)(void *buffer, int index);
-typedef void (*SET)(void *dynamic_arr, int index, void *data);
-
-typedef struct
-{
-  int length;
-  void *buffer;
-  int element_size;
-  int buffer_size;
-  int _current_insert_index;
-  char *arr_data_type;
-  GET arr_getter_function;
-  SET arr_setter_function;
-
-} DYNAMIC_ARRAY;
-
-// Stack like properties
-void push_DA(DYNAMIC_ARRAY *arr, void *data);
-void pop_DA(DYNAMIC_ARRAY *arr);
-
-// QUeue like properties
-void enqueue_DA(DYNAMIC_ARRAY *arr, void *data);
-void dequeue_DA(DYNAMIC_ARRAY *arr);
-
-// List properties
-DYNAMIC_ARRAY *create_array_DA(int element_size, GET arr_getter_fun, SET arr_setter_fun);
-void insert_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *data);
-void remove_at_index_DA(DYNAMIC_ARRAY *arr, int index);
-void *get_at_index_DA(DYNAMIC_ARRAY *arr, int index);
-void add_DA(DYNAMIC_ARRAY *arr, void *data);
-void for_each_DA(DYNAMIC_ARRAY *arr, VoidFunction fn);
-void _grow_buffer_DA(DYNAMIC_ARRAY *arr);
-void _shrink_buffer_DA(DYNAMIC_ARRAY *arr);
-
-// Creating a dynamic array
 DYNAMIC_ARRAY *create_array_DA(int element_size, GET arr_getter_fun, SET arr_setter_fun)
 {
   int initial_buffer_size = 5;
+  // printf("Created buffer size by malloc: %d", element_size * initial_buffer_size);
   void *buffer = malloc(element_size * initial_buffer_size);
 
   DYNAMIC_ARRAY *arr = (DYNAMIC_ARRAY *)malloc(sizeof(DYNAMIC_ARRAY));
@@ -98,21 +59,20 @@ void for_each_DA(DYNAMIC_ARRAY *arr, VoidFunction fn)
 
 void *get_at_index_DA(DYNAMIC_ARRAY *arr, int index)
 {
-  if (arr->length > index && index > 0)
+  if (arr->length > index && index >= 0)
   {
     return arr->arr_getter_function(arr->buffer, index);
   }
   else
   {
+    // printf("Returning nil of 0 index: %d and length: %d \n", index, arr->length);
     return 0;
   }
 }
 
-// TODO: Define the remove_at_index and _shrink_arr functions
-// TODO: All dynamic arr functions must end with DA so add it there ie: get_at_index_DA
 void insert_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *new_data)
 {
-  if (arr->length > index && index > 0)
+  if (arr->length > index && index >= 0)
   {
     // First shift copy the elements to a higher index
     for (int i = arr->length; i > index; i--)
@@ -133,10 +93,10 @@ void insert_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *new_data)
 
 void remove_at_index_DA(DYNAMIC_ARRAY *arr, int index)
 {
-  if (arr->length > index && index > 0)
+  if (arr->length > index && index >= 0)
   {
     // shift all elements in the arr to that index and
-    for (int i = index; i < arr->length; i++)
+    for (int i = index; i < arr->length - 1; i++)
     {
       int start_at = i + 1;
       void *data = arr->arr_getter_function(arr->buffer, start_at);
@@ -147,7 +107,14 @@ void remove_at_index_DA(DYNAMIC_ARRAY *arr, int index)
     _shrink_buffer_DA(arr);
   }
 }
-
+int has_next_element(DYNAMIC_ARRAY *arr, int index)
+{
+  if (arr->length > index && index >= 0)
+  {
+    return 1;
+  }
+  return 0;
+}
 void _grow_buffer_DA(DYNAMIC_ARRAY *arr)
 {
   // Grow buffer when the length items are more than a half of the buffer size
@@ -187,5 +154,3 @@ void _shrink_buffer_DA(DYNAMIC_ARRAY *arr)
     arr->buffer_size = new_buffer_size;
   }
 }
-
-#endif

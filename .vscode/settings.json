@@ -6,6 +6,8 @@
     "*.css": "tailwindcss",
     "pcre2.h": "c",
     "file_stream_types.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "dynamic_array.h": "c",
+    "h_file.h": "c"
   },
 }

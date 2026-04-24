@@ -1,3 +1,5 @@
+
+LANG_NAME = celite
 Action 	Command
 Configure	meson setup builddir
 Build	meson compile -C builddir

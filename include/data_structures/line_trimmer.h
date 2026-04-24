@@ -3,6 +3,8 @@
 #include <string.h>
 #include "./file_stream_types.h"
 #include "./file_stream.h"
+#include <ctype.h>
+#include "string/libstring.h"
 
 // File operates on the line array by
 /*
@@ -11,6 +13,8 @@ remove_empty_lines(FILESTREAM*, line_number)
 
 void remove_empty_lines(FILESTREAM *file_stream);
 void remove_comment_lines(FILESTREAM *file_stream);
+void split_line(char *line);
+// char **split_line(char *line);
 
 void remove_empty_lines(FILESTREAM *file_stream)
 {
@@ -62,6 +66,8 @@ void remove_empty_lines(FILESTREAM *file_stream)
     index++;
   }
   printf("Total number of empty lines: %d \n", total_number_of_empty_lines);
+  // TODO: Always call fit array to size after removin all comments and new lines
+  // void fit_array_size_to_length(DYNAMIC_ARRAY *arr);
 }
 
 void remove_comment_lines(FILESTREAM *file_stream)
@@ -113,4 +119,28 @@ void remove_comment_lines(FILESTREAM *file_stream)
     index++;
   }
   printf("Total number of comment lines: %d \n", total_number_of_comment_lines);
+  // TODO: Always call fit array to size after removin all comments and new lines
+  // void fit_array_size_to_length(DYNAMIC_ARRAY *arr);
+}
+
+void split_line(char *line)
+{
+  // TODO: first create release_array_memory_DA
+  // Create a data structure that receives a char
+  // Check if the char is not a space
+  // Add the char to the stack
+  // Get from stack if we have a length more than one and create a new memory
+  // Creates a representation of that char as an array
+
+  string_t *test_string = string_new(line);
+  // string_println(test_string);
+  string_t *new_string = string_trim(test_string);
+  string_vector_t *split_strings = string_split(new_string, ' ');
+
+  if(string_vector_len(split_strings) > 2){
+    
+  }
+
+
+  printf("String vector size: %d with length: %d \n", sizeof(string_vector_t), string_vector_len(split_strings));
 }

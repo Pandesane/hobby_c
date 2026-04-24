@@ -9,6 +9,7 @@ executable(
     'main.c',
     'src/data_structures/file_stream.c',
     'src/data_structures/dynamic_array.c',
+    'src/string/libstring.c',
   ],
   dependencies: pcre2_dep,
   include_directories: include_dir,

@@ -10,8 +10,7 @@ typedef void (*VoidFunction)(void *);
 typedef void *(*GET)(void *buffer, int index);
 typedef void (*SET)(void *dynamic_arr, int index, void *data);
 
-// Creating a dynamic array
-// GETTER AND SETTER DESIGN
+// GETTER AND SETTER FUNC CALL DESIGNs
 // void arr_setter(void *void_buffer, int index, void *data)
 // {
 //   float *buffer = (float *)void_buffer;
@@ -40,7 +39,7 @@ typedef struct
 void push_DA(DYNAMIC_ARRAY *arr, void *data);
 void pop_DA(DYNAMIC_ARRAY *arr);
 
-// QUeue like properties
+// Queue like properties
 void enqueue_DA(DYNAMIC_ARRAY *arr, void *data);
 void dequeue_DA(DYNAMIC_ARRAY *arr);
 
@@ -60,5 +59,9 @@ void for_each_DA(DYNAMIC_ARRAY *arr, VoidFunction fn);
 void _grow_buffer_DA(DYNAMIC_ARRAY *arr);
 void _shrink_buffer_DA(DYNAMIC_ARRAY *arr);
 int has_next_element(DYNAMIC_ARRAY *arr, int index);
+// Releases a memory chunk all back to the OS
+void release_array_memory_DA(DYNAMIC_ARRAY *arr);
+// Helps save on memory consumed by the program
+void fit_array_size_to_length(DYNAMIC_ARRAY *arr);
 
 #endif

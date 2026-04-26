@@ -39,6 +39,8 @@ typedef struct
 // Stack like properties
 void push_DA(DYNAMIC_ARRAY *arr, void *data);
 void pop_DA(DYNAMIC_ARRAY *arr);
+void* first_DA(DYNAMIC_ARRAY *arr);
+void* last_DA(DYNAMIC_ARRAY *arr);
 
 // Queue like properties
 void enqueue_DA(DYNAMIC_ARRAY *arr, void *data);
@@ -48,6 +50,7 @@ void dequeue_DA(DYNAMIC_ARRAY *arr);
 DYNAMIC_ARRAY *create_array_DA(int element_size, GET arr_getter_fun, SET arr_setter_fun);
 DYNAMIC_ARRAY *create_static_array_DA(int element_size,int length, GET arr_getter_fun, SET arr_setter_fun);
 void insert_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *data);
+void replace_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *data);
 void remove_at_index_DA(DYNAMIC_ARRAY *arr, int index);
 void *get_at_index_DA(DYNAMIC_ARRAY *arr, int index);
 void add_DA(DYNAMIC_ARRAY *arr, void *data);
@@ -66,5 +69,6 @@ void release_array_memory_DA(DYNAMIC_ARRAY *arr);
 // Helps save on memory consumed by the program
 void fit_array_size_to_length(DYNAMIC_ARRAY *arr);
 DYNAMIC_ARRAY * get_sub_arr_DA(DYNAMIC_ARRAY *, int start_index , int end_index);
+
 
 #endif

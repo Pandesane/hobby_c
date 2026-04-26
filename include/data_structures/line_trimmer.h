@@ -5,6 +5,7 @@
 #include "./file_stream.h"
 #include <ctype.h>
 #include "string/libstring.h"
+#include "event_stack.h"
 
 // File operates on the line array by
 /*
@@ -123,6 +124,74 @@ void remove_comment_lines(FILESTREAM *file_stream)
   // void fit_array_size_to_length(DYNAMIC_ARRAY *arr);
 }
 
+int event_stack_callback(DYNAMIC_ARRAY *arr, void *element, int *in_parenthesis)
+{
+  // THis function removes inside trailing spaces in a line and makes it possible to split it further
+  // for_each_DA(arr, char_arr_printer);
+  char current_c = *(char *)element;
+  if (arr->length == 0)
+  {
+    if (current_c == 'i')
+    {
+      // printf("Starting of an if statement \n");
+    }
+    return 1;
+  }
+
+  char prev_c = *(char *)last_DA(arr);
+  // printf("Previous char:[%c] \t Current char:[%c]\n", prev_c, current_c);
+
+  if ((*in_parenthesis) != 0 && current_c == ' ')
+  {
+    return 0;
+  }
+
+  if (current_c == ' ' && prev_c == ' ')
+  {
+
+    // printf("Two consecutive spaces: \n");
+    return 0;
+
+    // char_arr_printer(element);
+  }
+
+  if (current_c == '(')
+  {
+    // replace_at_index_DA(arr, arr->length - 1, element);
+    char space = ' ';
+    if (prev_c != ' ' && prev_c != '(' && prev_c != '&')
+    {
+      add_DA(arr, &space);
+    }
+    *in_parenthesis = (*in_parenthesis) + 1;
+    return 1;
+  }
+
+  // if (prev_c == '(' && current_c == ' ')
+  // {
+  //   return 0;
+  // }
+
+  if (prev_c == ' ' && current_c == ',')
+  {
+    replace_at_index_DA(arr, arr->length - 1, element);
+    return 0;
+  }
+
+  if (prev_c == ',' && current_c == ' ')
+  {
+    return 0;
+  }
+
+  if (current_c == ')')
+  {
+    // replace_at_index_DA(arr, arr->length - 1, element);
+    *in_parenthesis = (*in_parenthesis) - 1;
+    return 1;
+  }
+
+  return 1;
+}
 void split_line(char *line)
 {
   // TODO: first create release_array_memory_DA
@@ -133,14 +202,38 @@ void split_line(char *line)
   // Creates a representation of that char as an array
 
   string_t *test_string = string_new(line);
-  // string_println(test_string);
+  string_println(test_string);
   string_t *new_string = string_trim(test_string);
-  string_vector_t *split_strings = string_split(new_string, ' ');
+  string_println(new_string);
+  EVENT_STACK *stack = create_event_stack(sizeof(char), event_stack_callback, char_arr_getter, char_arr_setter);
 
-  if(string_vector_len(split_strings) > 2){
-    
+  char *trimmed_string = string_tocstr(new_string);
+
+  while (*trimmed_string != '\0')
+  {
+    add_EVENT_STACK(stack, trimmed_string);
+
+    trimmed_string++;
   }
 
+  // TODO: Remove error in fit_array_size_to_length
+  // fit_array_size_to_length(stack->arr);
+  // char * formatted_line =
 
-  printf("String vector size: %d with length: %d \n", sizeof(string_vector_t), string_vector_len(split_strings));
+  // char p = 'p';
+  // add_EVENT_STACK(stack, &p);
+  // add_EVENT_STACK(stack, &p);
+  // add_EVENT_STACK(stack, &p);
+
+  // string_vector_t *split_strings = string_split(new_string, ' ');
+
+  // if (string_vector_len(split_strings) > 2)
+  // {
+  // }
+
+  // for_each_DA(stack->arr, char_arr_printer);
+  char *final_line_str = convert_to_cstr(stack->arr);
+  printf("Formatted line: -->%s\n", final_line_str);
+
+  printf("Event Stack  size: %d with length: %d \n", stack->arr->buffer_size, stack->arr->length);
 }

@@ -108,6 +108,10 @@ void insert_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *new_data)
   }
 }
 
+void replace_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *data)
+{
+  arr->arr_setter_function(arr->buffer, index, data);
+}
 void remove_at_index_DA(DYNAMIC_ARRAY *arr, int index)
 {
   if (arr->length > index && index >= 0)
@@ -121,7 +125,7 @@ void remove_at_index_DA(DYNAMIC_ARRAY *arr, int index)
     }
     arr->length--;
     arr->_current_insert_index = arr->length - 1;
-    _shrink_buffer_DA(arr);
+    // _shrink_buffer_DA(arr);
   }
 }
 int has_next_element(DYNAMIC_ARRAY *arr, int index)
@@ -209,7 +213,8 @@ void free_arr_element_memory(void *data)
 
 void release_array_memory_DA(DYNAMIC_ARRAY *arr)
 {
-  for_each_DA(arr, free_arr_element_memory);
+  // TODO: Add a free function for the created array to use when freeing memory
+  // for_each_DA(arr, free_arr_element_memory);
   free(arr);
   arr = 0;
 }
@@ -229,4 +234,17 @@ void fit_array_size_to_length(DYNAMIC_ARRAY *arr)
   }
   release_array_memory_DA(arr);
   *arr = *new_arr;
+}
+
+void *first_DA(DYNAMIC_ARRAY *arr)
+{
+  return get_at_index_DA(arr, 0);
+}
+void *last_DA(DYNAMIC_ARRAY *arr)
+{
+  if (arr->length == 0)
+  {
+    return 0;
+  }
+  return get_at_index_DA(arr, arr->length - 1);
 }

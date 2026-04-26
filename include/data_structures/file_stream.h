@@ -1,6 +1,7 @@
 
 #include "./file_stream_types.h"
 #include "./dynamic_array.h"
+#include "./line.h"
 
 #ifndef FILESTREAM_H
 #define FILESTREAM_H
@@ -20,7 +21,6 @@ getNumberOfLine
 releaseStream
 
 */
-void file_stream_printer(void *data);
 FILESTREAM *open_file(char *fileName);
 LINE get_current_line(FILESTREAM *fileStream);
 LINE get_next_line(FILESTREAM *fileStream);

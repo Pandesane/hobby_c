@@ -4,29 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// Dynamic Array functions Loader
-void file_stream_printer(void *data)
-{
 
-  printf("Data in array is: %s", data);
-}
-
-void file_stream_arr_setter(void *void_buffer, int index, void *data)
-{
-  LINE chunk = malloc(strlen((char *)data) + 1);
-  // LINE chunk = malloc(sizeof(char *) * 300);
-
-  strcpy(chunk, (char *)data);
-  LINE *buffer = (LINE *)void_buffer;
-  // printf("Data  added to array [%d] is: %s ", index, buffer[index]);
-  buffer[index] = chunk;
-}
-
-void *file_stream_arr_getter(void *void_buffer, int index)
-{
-  LINE *buffer = (LINE *)void_buffer;
-  return buffer[index];
-}
 
 FILESTREAM *open_file(char *fileName)
 {
@@ -45,7 +23,7 @@ FILESTREAM *open_file(char *fileName)
   // file_stream->maxLines = 300;
 
   // TODO: Create a line data structure array that makes it easy to put and get lines of a file
-  DYNAMIC_ARRAY *arr = create_array_DA(sizeof(LINE), file_stream_arr_getter, file_stream_arr_setter);
+  DYNAMIC_ARRAY *arr = create_array_DA(sizeof(LINE), line_arr_getter, line_arr_setter);
   file_stream->cached_file_lines = arr;
   return file_stream;
 }
@@ -59,7 +37,7 @@ void print_file_contents(FILESTREAM *file_stream)
   //   printf("LINE: %ld >%s \n", i, line);
   // }
 
-  for_each_DA(file_stream->cached_file_lines, file_stream_printer);
+  for_each_DA(file_stream->cached_file_lines, line_arr_printer);
 }
 
 void load_file_contents(FILESTREAM *file_stream)

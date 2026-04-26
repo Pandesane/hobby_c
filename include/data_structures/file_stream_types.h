@@ -3,8 +3,9 @@
 #define FILESTREAM_TYPES
 #include <stdio.h>
 #include "./dynamic_array.h"
+#include "./line.h"
 
-typedef char *LINE;
+
 typedef struct
 {
   char *file_path;

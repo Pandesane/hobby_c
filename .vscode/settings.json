@@ -8,6 +8,10 @@
     "file_stream_types.h": "c",
     "stdlib.h": "c",
     "dynamic_array.h": "c",
-    "h_file.h": "c"
+    "h_file.h": "c",
+    "file_stream.h": "c",
+    "string.h": "c",
+    "line.h": "c",
+    "event_stack.h": "c"
   },
 }

@@ -9,6 +9,8 @@ executable(
     'main.c',
     'src/data_structures/file_stream.c',
     'src/data_structures/dynamic_array.c',
+    'src/data_structures/line.c',
+    'src/data_structures/event_stack.c',
     'src/string/libstring.c',
   ],
   dependencies: pcre2_dep,

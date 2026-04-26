@@ -32,6 +32,7 @@ typedef struct
   char *arr_data_type;
   GET arr_getter_function;
   SET arr_setter_function;
+  int is_static_arr;
 
 } DYNAMIC_ARRAY;
 
@@ -45,6 +46,7 @@ void dequeue_DA(DYNAMIC_ARRAY *arr);
 
 // List properties
 DYNAMIC_ARRAY *create_array_DA(int element_size, GET arr_getter_fun, SET arr_setter_fun);
+DYNAMIC_ARRAY *create_static_array_DA(int element_size,int length, GET arr_getter_fun, SET arr_setter_fun);
 void insert_at_index_DA(DYNAMIC_ARRAY *arr, int index, void *data);
 void remove_at_index_DA(DYNAMIC_ARRAY *arr, int index);
 void *get_at_index_DA(DYNAMIC_ARRAY *arr, int index);
@@ -63,5 +65,6 @@ int has_next_element(DYNAMIC_ARRAY *arr, int index);
 void release_array_memory_DA(DYNAMIC_ARRAY *arr);
 // Helps save on memory consumed by the program
 void fit_array_size_to_length(DYNAMIC_ARRAY *arr);
+DYNAMIC_ARRAY * get_sub_arr_DA(DYNAMIC_ARRAY *, int start_index , int end_index);
 
 #endif

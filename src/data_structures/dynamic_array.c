@@ -19,6 +19,23 @@ DYNAMIC_ARRAY *create_array_DA(int element_size, GET arr_getter_fun, SET arr_set
   return arr;
 }
 
+DYNAMIC_ARRAY *create_static_array_DA(int element_size, int length, GET arr_getter_fun, SET arr_setter_fun)
+{
+  int initial_buffer_size = length;
+  // printf("Created buffer size by malloc: %d", element_size * initial_buffer_size);
+  void *buffer = malloc(element_size * initial_buffer_size);
+
+  DYNAMIC_ARRAY *arr = (DYNAMIC_ARRAY *)malloc(sizeof(DYNAMIC_ARRAY));
+  arr->buffer = buffer;
+  arr->is_static_arr = 1;
+  arr->buffer_size = initial_buffer_size;
+  arr->element_size = element_size;
+  arr->_current_insert_index = 0;
+  arr->arr_setter_function = arr_setter_fun;
+  arr->arr_getter_function = arr_getter_fun;
+  return arr;
+}
+
 // Stack functions
 void push_DA(DYNAMIC_ARRAY *arr, void *data)
 {
@@ -116,7 +133,13 @@ int has_next_element(DYNAMIC_ARRAY *arr, int index)
   return 0;
 }
 void _grow_buffer_DA(DYNAMIC_ARRAY *arr)
+
 {
+  if (arr->is_static_arr == 1)
+  {
+    printf("Gotten a static array \n");
+    return;
+  }
   // Grow buffer when the length items are more than a half of the buffer size
 
   if (arr->length > arr->buffer_size / 2)
@@ -137,6 +160,10 @@ void _grow_buffer_DA(DYNAMIC_ARRAY *arr)
 
 void _shrink_buffer_DA(DYNAMIC_ARRAY *arr)
 {
+  if (arr->is_static_arr == 1)
+  {
+    return;
+  }
 
   // Shrink buffer when the length items are less than a third of the buffer size
   if (arr->length < arr->buffer_size / 3)
@@ -149,8 +176,57 @@ void _shrink_buffer_DA(DYNAMIC_ARRAY *arr)
       void *data = arr->arr_getter_function(arr->buffer, i);
       arr->arr_setter_function(new_buffer, i, data);
     }
+
     free(arr->buffer);
     arr->buffer = new_buffer;
     arr->buffer_size = new_buffer_size;
   }
+}
+
+DYNAMIC_ARRAY *get_sub_arr_DA(DYNAMIC_ARRAY *arr, int start_index, int end_index)
+{
+  // Create a new array pointer
+  // copy the getter and setters
+  DYNAMIC_ARRAY *new_arr = create_array_DA(arr->element_size, arr->arr_getter_function, arr->arr_setter_function);
+
+  // Iterate from the main array and get the element at the index and copy its value to a newindex in the new arraey
+  int index = start_index;
+  while (has_next_element(arr, index) && index <= end_index)
+  {
+    void *element = get_at_index_DA(arr, index);
+    add_DA(new_arr, element);
+
+    index++;
+  }
+
+  return new_arr;
+}
+
+void free_arr_element_memory(void *data)
+{
+  free(data);
+}
+
+void release_array_memory_DA(DYNAMIC_ARRAY *arr)
+{
+  for_each_DA(arr, free_arr_element_memory);
+  free(arr);
+  arr = 0;
+}
+
+void fit_array_size_to_length(DYNAMIC_ARRAY *arr)
+{
+  DYNAMIC_ARRAY *new_arr = create_static_array_DA(arr->element_size, arr->length, arr->arr_getter_function, arr->arr_setter_function);
+
+  // Iterate from the main array and get the element at the index and copy its value to a newindex in the new arraey
+  int index = 0;
+  while (has_next_element(arr, index))
+  {
+    void *element = get_at_index_DA(arr, index);
+    add_DA(new_arr, element);
+
+    index++;
+  }
+  release_array_memory_DA(arr);
+  *arr = *new_arr;
 }

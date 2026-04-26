@@ -5,6 +5,7 @@ Added parsing the file line by line using getLine nextLine and prevLine
 
 
 Removing empty lines and comments
+Add ability to get a sub array from the dynamic array given the start and end index
 Splitting files to multiple .c files and using headers instead
 Creating a tree data structure that can map a do block to and end block and extract
 all the contents in between and make a scope for that block

@@ -20,7 +20,7 @@ getNumberOfLine
 releaseStream
 
 */
-
+void file_stream_printer(void *data);
 FILESTREAM *open_file(char *fileName);
 LINE get_current_line(FILESTREAM *fileStream);
 LINE get_next_line(FILESTREAM *fileStream);

@@ -15,7 +15,7 @@ EVENT_STACK *create_event_stack(int element_size, EVENT_STACK_CALLBACK event_han
 void add_EVENT_STACK(EVENT_STACK *event_stack, void *element)
 {
   int addToArray = event_stack->event_handler(event_stack->arr, element, &event_stack->in_parenthesis);
-  if (addToArray)
+  if (addToArray == 1)
   {
     add_DA(event_stack->arr, element);
   }

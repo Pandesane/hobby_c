@@ -14,6 +14,8 @@ DYNAMIC_ARRAY *create_array_DA(int element_size, GET arr_getter_fun, SET arr_set
   arr->buffer_size = initial_buffer_size;
   arr->element_size = element_size;
   arr->_current_insert_index = 0;
+  arr->length = 0;
+
   arr->arr_setter_function = arr_setter_fun;
   arr->arr_getter_function = arr_getter_fun;
   return arr;
@@ -27,6 +29,7 @@ DYNAMIC_ARRAY *create_static_array_DA(int element_size, int length, GET arr_gett
 
   DYNAMIC_ARRAY *arr = (DYNAMIC_ARRAY *)malloc(sizeof(DYNAMIC_ARRAY));
   arr->buffer = buffer;
+  arr->length = 0;
   arr->is_static_arr = 1;
   arr->buffer_size = initial_buffer_size;
   arr->element_size = element_size;
@@ -41,9 +44,11 @@ void push_DA(DYNAMIC_ARRAY *arr, void *data)
 {
   add_DA(arr, data);
 }
-void pop_DA(DYNAMIC_ARRAY *arr)
+void *pop_DA(DYNAMIC_ARRAY *arr)
 {
+  void *poped = get_at_index_DA(arr, arr->length - 1);
   remove_at_index_DA(arr, arr->length - 1);
+  return poped;
 }
 
 // Queue like properties

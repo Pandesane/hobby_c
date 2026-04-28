@@ -5,7 +5,7 @@
 void line_arr_printer(void *data)
 {
 
-  printf("Data in array is: %s", (LINE)data);
+  printf("Data in array is: %s \n", (LINE)data);
 }
 
 void line_arr_setter(void *void_buffer, int index, void *data)
@@ -59,6 +59,10 @@ char *convert_to_cstr(DYNAMIC_ARRAY *arr)
 
   cstr[arr->length] = '\0';
 
-
   return cstr;
+}
+
+DYNAMIC_ARRAY *new_dynamic_arr()
+{
+  return create_array_DA(sizeof(LINE), line_arr_getter, line_arr_setter);
 }

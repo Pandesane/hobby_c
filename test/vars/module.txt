@@ -1,0 +1,9 @@
+defmodule   HelloWorld do
+   def hello do
+    print("Hello Man")
+    end
+    defp greet(name) do
+    print("Hello #{name}")
+    print("Am good!")
+    end
+end

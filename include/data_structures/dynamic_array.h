@@ -38,7 +38,7 @@ typedef struct
 
 // Stack like properties
 void push_DA(DYNAMIC_ARRAY *arr, void *data);
-void pop_DA(DYNAMIC_ARRAY *arr);
+void* pop_DA(DYNAMIC_ARRAY *arr);
 void* first_DA(DYNAMIC_ARRAY *arr);
 void* last_DA(DYNAMIC_ARRAY *arr);
 

@@ -12,6 +12,9 @@
     "file_stream.h": "c",
     "string.h": "c",
     "line.h": "c",
-    "event_stack.h": "c"
+    "event_stack.h": "c",
+    "keywords.h": "c",
+    "do_stack.h": "c",
+    "line_trimmer.h": "c"
   },
 }

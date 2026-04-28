@@ -6,6 +6,8 @@
 
 
 Add DoStack and also remove trailing inside and outside spaces and return back a well code generatable line
+Avoid removing of spaces in quotes strings
+Adding a sensitive space remover that can know how to remove spaces for a particular kind of expression i.e if, case , cond etc
 Splitting files to multiple .c files and using headers instead
 Creating a tree data structure that can map a do block to and end block and extract
 all the contents in between and make a scope for that block

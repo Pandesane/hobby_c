@@ -8,6 +8,7 @@
 // #include "data_structures/file_stream.h";
 #include "data_structures/line_trimmer.h"
 // #include "string/libstring.h"
+#include "keywords.h"
 
 #define PCRE2_CODE_UNIT_WIDTH 8
 #include <stdio.h>
@@ -25,7 +26,7 @@ int main()
   // split_line(" def greet ( name , age  ) do ");
   // split_line(" def greet ( name , age  ) do \n");
 
-  FILESTREAM *file_stream = open_file("test/vars/functions.txt");
+  FILESTREAM *file_stream = open_file("test/vars/module.txt");
   load_file_contents(file_stream);
   remove_empty_lines(file_stream);
   remove_comment_lines(file_stream);
@@ -33,25 +34,30 @@ int main()
   printf(" 1 Dynamic array size: %d length: %d \n", file_stream->cached_file_lines->buffer_size, file_stream->cached_file_lines->length);
 
   int index = 0;
-  while (has_next_element(file_stream->cached_file_lines, index))
+  DYNAMIC_ARRAY *arr = file_stream->cached_file_lines;
+  while (has_next_element(arr, index))
   {
 
-    LINE line = get_at_index_DA(file_stream->cached_file_lines, index);
-    split_line(line);
+    LINE line = get_at_index_DA(arr, index);
+    char *new_line = remove_inline_and_trailing_spaces(line);
+    replace_at_index_DA(arr, index, new_line);
+    // printf("Formatted line: -->%s\n", new_line);
+
+    // string_t *s_string = string_new(new_line);
+    // string_vector_t *sv_string = string_split(s_string, ' ');
+    // char *cstr = string_tocstr(string_vector_get(sv_string, 0));
+    // switch_block_keywords(cstr, index, arr);
 
     index++;
   }
+  // LINE start_line = get_at_index_DA(arr, 0);
+  // string_t *s_string = string_new(start_line);
+  // string_vector_t *sv_string = string_split(s_string, ' ');
+  // char *cstr = string_tocstr(string_vector_get(sv_string, 0));
+  // switch_block_keywords(cstr, index, arr);
+  create_do_blocks(arr);
 
-  // split_line("  if   ( ( name == age) && (age  >  78)    )   do ");
-
-  // DYNAMIC_ARRAY *sub_arr = get_sub_arr_DA(file_stream->cached_file_lines, 0, 10);
-  // for_each_DA(sub_arr, file_stream_printer);
-  // printf(" New Dynamic array size: %d length: %d \n", sub_arr->buffer_size, sub_arr->length);
-
-  // fit_array_size_to_length(sub_arr);
-  // for_each_DA(sub_arr, file_stream_printer);
-
-  // printf(" Static Dynamic array size: %d length: %d \n", sub_arr->buffer_size, sub_arr->length);
+  // string_println(string_vector_get(sv_string, 0));
 
   return 0;
 }

@@ -14,50 +14,108 @@
 #include <stdio.h>
 #include <string.h>
 #include <pcre2.h>
+#include "data_structures/linked_list.h"
+
+// int main()
+// {
+//   // read_file("test/vars/number.txt");
+//   // read_file("test/vars/string.txt");
+//   // read_file("test/vars/functions.txt");
+
+//   // split_line("  defmodule  HelloWorld  do   ");
+//   // split_line("  def name do  ");
+//   // split_line(" def greet ( name , age  ) do ");
+//   // split_line(" def greet ( name , age  ) do \n");
+
+//   FILESTREAM *file_stream = open_file("test/vars/module.txt");
+//   load_file_contents(file_stream);
+//   remove_empty_lines(file_stream);
+//   remove_comment_lines(file_stream);
+//   print_file_contents(file_stream);
+//   printf(" 1 Dynamic array size: %d length: %d \n", file_stream->cached_file_lines->buffer_size, file_stream->cached_file_lines->length);
+
+//   int index = 0;
+//   DYNAMIC_ARRAY *arr = file_stream->cached_file_lines;
+//   while (has_next_element(arr, index))
+//   {
+
+//     LINE line = get_at_index_DA(arr, index);
+//     char *new_line = remove_inline_and_trailing_spaces(line);
+//     replace_at_index_DA(arr, index, new_line);
+//     // printf("Formatted line: -->%s\n", new_line);
+
+//     // string_t *s_string = string_new(new_line);
+//     // string_vector_t *sv_string = string_split(s_string, ' ');
+//     // char *cstr = string_tocstr(string_vector_get(sv_string, 0));
+//     // switch_block_keywords(cstr, index, arr);
+
+//     index++;
+//   }
+//   // LINE start_line = get_at_index_DA(arr, 0);
+//   // string_t *s_string = string_new(start_line);
+//   // string_vector_t *sv_string = string_split(s_string, ' ');
+//   // char *cstr = string_tocstr(string_vector_get(sv_string, 0));
+//   // switch_block_keywords(cstr, index, arr);
+//   create_do_blocks(arr);
+
+//   // string_println(string_vector_get(sv_string, 0));
+
+//   return 0;
+// }
+
+void *getter_for_int_linked_list(void *linked_list_buffer)
+{
+  printf("Running getter for linked_list \n");
+  LINKED_LIST *list_item = (LINKED_LIST *)linked_list_buffer;
+  return (int *)list_item->data;
+}
+void setter_for_int_linked_list(void *linked_list_buffer, void *data)
+{
+  LINKED_LIST *list_item = (LINKED_LIST *)linked_list_buffer;
+  int *int_data = malloc(sizeof(int));
+  *int_data = *(int *)data;
+  printf("Setting data of %d \n", *int_data);
+  list_item->data = int_data;
+  list_item->next_list_item = 0;
+}
 
 int main()
 {
-  // read_file("test/vars/number.txt");
-  // read_file("test/vars/string.txt");
-  // read_file("test/vars/functions.txt");
+  LINKED_LIST_HEADER *list = create_linked_list(sizeof(int), getter_for_int_linked_list, setter_for_int_linked_list);
 
-  // split_line("  defmodule  HelloWorld  do   ");
-  // split_line("  def name do  ");
-  // split_line(" def greet ( name , age  ) do ");
-  // split_line(" def greet ( name , age  ) do \n");
+  int data = 1200;
+  // add_to_linked_list(list, &data);
+  // data = 23;
+  // add_to_linked_list(list, &data);
+  // add_to_linked_list(list, &data);
+  // add_to_linked_list(list, &data);
+  // printf("Current list data: %d\n", *(int *)list->start->data);
 
-  FILESTREAM *file_stream = open_file("test/vars/module.txt");
-  load_file_contents(file_stream);
-  remove_empty_lines(file_stream);
-  remove_comment_lines(file_stream);
-  print_file_contents(file_stream);
-  printf(" 1 Dynamic array size: %d length: %d \n", file_stream->cached_file_lines->buffer_size, file_stream->cached_file_lines->length);
+  push_list(list, &data);
+  push_list(list, &data);
+  data = 24;
+  push_list(list, &data);
+  data = 36;
+  push_list(list, &data);
+  printf("Current list length: %d\n", list->length);
 
-  int index = 0;
-  DYNAMIC_ARRAY *arr = file_stream->cached_file_lines;
-  while (has_next_element(arr, index))
-  {
+  LINKED_LIST *item = (LINKED_LIST *)pop_list(list);
+  printf("Current  poped data : %d\n", *(int *)item->data);
+  printf("Current list length after poping: %d\n", list->length);
 
-    LINE line = get_at_index_DA(arr, index);
-    char *new_line = remove_inline_and_trailing_spaces(line);
-    replace_at_index_DA(arr, index, new_line);
-    // printf("Formatted line: -->%s\n", new_line);
 
-    // string_t *s_string = string_new(new_line);
-    // string_vector_t *sv_string = string_split(s_string, ' ');
-    // char *cstr = string_tocstr(string_vector_get(sv_string, 0));
-    // switch_block_keywords(cstr, index, arr);
 
-    index++;
-  }
-  // LINE start_line = get_at_index_DA(arr, 0);
-  // string_t *s_string = string_new(start_line);
-  // string_vector_t *sv_string = string_split(s_string, ' ');
-  // char *cstr = string_tocstr(string_vector_get(sv_string, 0));
-  // switch_block_keywords(cstr, index, arr);
-  create_do_blocks(arr);
+  enqueue_list(list, &data);
+  // enqueue(list, &data);
+  data = 24;
+  enqueue_list(list, &data);
+  data = 36;
+  enqueue_list(list, &data);
+  printf("Current list length: %d\n", list->length);
 
-  // string_println(string_vector_get(sv_string, 0));
+  LINKED_LIST *new_item = (LINKED_LIST *)deque_list(list);
+  printf("Current  deque data : %d\n", *(int *)new_item->data);
+  printf("Current list length after poping: %d\n", list->length);
 
   return 0;
 }

@@ -2,10 +2,10 @@
 //Added parsing the file line by line using getLine nextLine and prevLine
 //Removing empty lines and comments
 //Add ability to get a sub array from the dynamic array given the start and end index
+//Add DoStack and also remove trailing inside and outside spaces and return back a well code generatable line
 
 
 
-Add DoStack and also remove trailing inside and outside spaces and return back a well code generatable line
 Avoid removing of spaces in quotes strings
 Adding a sensitive space remover that can know how to remove spaces for a particular kind of expression i.e if, case , cond etc
 Splitting files to multiple .c files and using headers instead

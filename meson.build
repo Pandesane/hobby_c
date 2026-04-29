@@ -10,6 +10,7 @@ executable(
     'src/data_structures/file_stream.c',
     'src/data_structures/dynamic_array.c',
     'src/data_structures/line.c',
+    'src/data_structures/linked_list.c',
     'src/data_structures/line_trimmer.c',
     'src/data_structures/do_stack.c',
     'src/data_structures/event_stack.c',

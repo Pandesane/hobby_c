@@ -153,7 +153,7 @@ void _grow_buffer_DA(DYNAMIC_ARRAY *arr)
 
   if (arr->length > arr->buffer_size / 2)
   {
-    printf("Growing buffer \n");
+    // printf("Growing buffer \n");
     int new_buffer_size = arr->buffer_size * 2;
     void *new_buffer = malloc(arr->element_size * new_buffer_size);
     for (int i = 0; i < arr->length; i++)
@@ -177,7 +177,7 @@ void _shrink_buffer_DA(DYNAMIC_ARRAY *arr)
   // Shrink buffer when the length items are less than a third of the buffer size
   if (arr->length < arr->buffer_size / 3)
   {
-    printf("Shrinking buffer \n");
+    // printf("Shrinking buffer \n");
     int new_buffer_size = arr->buffer_size / 2;
     void *new_buffer = malloc(arr->element_size * new_buffer_size);
     for (int i = 0; i < arr->length; i++)
@@ -204,9 +204,12 @@ DYNAMIC_ARRAY *get_sub_arr_DA(DYNAMIC_ARRAY *arr, int start_index, int end_index
   {
     void *element = get_at_index_DA(arr, index);
     add_DA(new_arr, element);
+    // Remove
+    // printf("{%c}-", *(char *)element);
 
     index++;
   }
+  // printf("\n");
 
   return new_arr;
 }

@@ -15,6 +15,8 @@
 #include <string.h>
 #include <pcre2.h>
 #include "data_structures/linked_list.h"
+#include "string/string_DA.h"
+#include "data_structures/blocks/def.h"
 
 // int main()
 // {
@@ -63,59 +65,28 @@
 //   return 0;
 // }
 
-void *getter_for_int_linked_list(void *linked_list_buffer)
+typedef enum
 {
-  printf("Running getter for linked_list \n");
-  LINKED_LIST *list_item = (LINKED_LIST *)linked_list_buffer;
-  return (int *)list_item->data;
-}
-void setter_for_int_linked_list(void *linked_list_buffer, void *data)
+  INT,
+  FLOAT
+} Number_Code;
+typedef struct
 {
-  LINKED_LIST *list_item = (LINKED_LIST *)linked_list_buffer;
-  int *int_data = malloc(sizeof(int));
-  *int_data = *(int *)data;
-  printf("Setting data of %d \n", *int_data);
-  list_item->data = int_data;
-  list_item->next_list_item = 0;
-}
+  Number_Code code;
+  union
+  {
+    float float_var;
+    int int_var;
+  };
+} Number;
+
 
 int main()
 {
-  LINKED_LIST_HEADER *list = create_linked_list(sizeof(int), getter_for_int_linked_list, setter_for_int_linked_list);
 
-  int data = 1200;
-  // add_to_linked_list(list, &data);
-  // data = 23;
-  // add_to_linked_list(list, &data);
-  // add_to_linked_list(list, &data);
-  // add_to_linked_list(list, &data);
-  // printf("Current list data: %d\n", *(int *)list->start->data);
-
-  push_list(list, &data);
-  push_list(list, &data);
-  data = 24;
-  push_list(list, &data);
-  data = 36;
-  push_list(list, &data);
-  printf("Current list length: %d\n", list->length);
-
-  LINKED_LIST *item = (LINKED_LIST *)pop_list(list);
-  printf("Current  poped data : %d\n", *(int *)item->data);
-  printf("Current list length after poping: %d\n", list->length);
-
-
-
-  enqueue_list(list, &data);
-  // enqueue(list, &data);
-  data = 24;
-  enqueue_list(list, &data);
-  data = 36;
-  enqueue_list(list, &data);
-  printf("Current list length: %d\n", list->length);
-
-  LINKED_LIST *new_item = (LINKED_LIST *)deque_list(list);
-  printf("Current  deque data : %d\n", *(int *)new_item->data);
-  printf("Current list length after poping: %d\n", list->length);
-
+  // char *def_header_block = "def greet(age: number) do";
+  // char *def_header_block = "def greet(name: string, age: number) string do";
+  char *def_header_block = "def greet(name: string, age: number, gender: string) do";
+  process_def_block_header(def_header_block);
   return 0;
 }

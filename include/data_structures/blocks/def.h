@@ -19,23 +19,12 @@
 
 // } DO_STACK;
 
-void def_preprocessor(DYNAMIC_ARRAY *line_arr, DO_STACK *me_do_stack, int current_index)
-{
-  printf("Running preprocessor def \n");
-  me_do_stack->line_end_index = current_index;
-  me_do_stack->line_expressions = get_sub_arr_DA(line_arr, me_do_stack->line_start_index + 1, current_index - 1);
-  me_do_stack->name = (char *)get_block_name((char *)get_at_index_DA(line_arr, me_do_stack->line_start_index));
-  for_each_DA(me_do_stack->line_expressions, line_arr_printer);
-}
 
-DO_STACK *create_def_do_stack_block(int line_start_index)
-{
-  DO_STACK *defmodule_block = (DO_STACK *)malloc(sizeof(DO_STACK));
-  defmodule_block->line_start_index = line_start_index;
-  defmodule_block->type = "def";
-  defmodule_block->preprocess = def_preprocessor;
-
-  return defmodule_block;
-}
+char *convert_def_arg_to_c_arg  (  DYNAMIC_ARRAY *arr);
+// IN -- def greet(name: string, age: number) do
+// OUT -- ANY_T greet(string name, Number age)
+void process_def_block_header(char *def_header);
+void def_preprocessor(DYNAMIC_ARRAY *line_arr, DO_STACK *me_do_stack, int current_index);
+DO_STACK *create_def_do_stack_block(int line_start_index);
 
 #endif
